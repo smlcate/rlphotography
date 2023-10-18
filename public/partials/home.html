@@ -1,0 +1,17 @@
+<div class="parentDisplays" id="homeDisplay">
+  <div class="hardBorders" id="headerHardBorder"></div>
+
+    <div class="carousel-container">
+      <div class="carousel-slides" ng-style="{'transform': 'translateX(-' + (currentSlide * 100) + '%)'}">
+        <div class="slide" ng-repeat="slide in slides">
+          <img ng-src="{{ slide }}" alt="Image">
+        </div>
+      </div>
+      <button class="prev-button" ng-click="prevSlide()">Previous</button>
+      <button class="next-button" ng-click="nextSlide()">Next</button>
+      <nav id="homeCarouselNav">
+        <a href="" id="carouselSelectAnc{{$index}}" ng-click="selectCarouselIndex($index)" ng-repeat="slide in slides track by $index">•</a>
+      </nav>
+    </div>
+
+</div>
