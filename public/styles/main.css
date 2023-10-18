@@ -92,6 +92,12 @@ header img {
   gap: 0.5em;
   border-top: 1px solid #2A1510;
 }
+#pageController {
+  padding: 0.5em;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
 #headerHardBorder {
   /* margin-bottom: 0em; */
   z-index: 3;

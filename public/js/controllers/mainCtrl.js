@@ -1,6 +1,7 @@
 app.controller('mainCtrl', ['$scope', '$http', '$window', '$compile', '$location', function($scope, $http, $window, $compile, $location) {
 
   $scope.colorScheme = 'light';
+  $scope.logo = 0;
 
   $scope.pageMod = {
     colors: {
@@ -27,6 +28,10 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$compile', '$location
     $scope.colorScheme = $scope.colorScheme ==  'light' ? 'dark': 'light';
     setColors();
     setBackground();
+  }
+  $scope.toggleLogo = function() {
+    $scope.logo = $scope.logo == 0? 1: 0;
+    setColors();
   }
 
 
@@ -124,26 +129,39 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$compile', '$location
     if($scope.colorScheme == 'light') {
 
       $('body').css('background',$scope.pageMod.colors.light[0]);
+      $('body').css('color',$scope.pageMod.colors.light[1]);
       $('.slide img').css('background',$scope.pageMod.colors.light[0]);
       $('a').css('color',$scope.pageMod.colors.light[1]);
       $('.hardBorders').css('borderColor',$scope.pageMod.colors.light[1]);
       $('.hardBorders').css('background', $scope.pageMod.colors.light[1]);
       $('#headerNav').css('borderColor',$scope.pageMod.colors.light[1]);
       $('.parentDisplays').css('background',$scope.pageMod.colors.light[4]);
-      $('header img').attr('src','./images/logo_brushed_01.svg')
-      $('footer img').attr('src','./images/logo_brushed_02.svg')
+      if ($scope.logo == 0) {
+        $('header img').attr('src','./images/logo_brushed_01.svg')
+        $('footer img').attr('src','./images/logo_brushed_02.svg')
+      } else {
+        $('header img').attr('src','./images/logo_brushed_03.svg')
+        $('footer img').attr('src','./images/logo_brushed_03.svg')
+      }
       $('#'+path+'HeaderNavAnc').css('color',$scope.pageMod.colors.light[3]);
 
     } else {
       $('body').css('background',$scope.pageMod.colors.dark[0]);
+      $('body').css('color',$scope.pageMod.colors.dark[1]);
       $('.slide img').css('background',$scope.pageMod.colors.dark[0]);
       $('a').css('color',$scope.pageMod.colors.dark[1]);
       $('.hardBorders').css('borderColor',$scope.pageMod.colors.dark[1]);
       $('.hardBorders').css('background', $scope.pageMod.colors.dark[1]);
       $('#headerNav').css('borderColor',$scope.pageMod.colors.dark[1]);
       $('.parentDisplays').css('background',$scope.pageMod.colors.dark[4]);
-      $('header img').attr('src','./images/logo_brushed_01_mintandwhite.svg');
-      $('footer img').attr('src','./images/logo_brushed_02_mintandwhite.svg');
+      if ($scope.logo == 1) {
+        $('header img').attr('src','./images/logo_brushed_01_mintandwhite.svg');
+        $('footer img').attr('src','./images/logo_brushed_02_mintandwhite.svg');
+      } else {
+        $('header img').attr('src','./images/logo_brushed_03_mintandwhite.svg');
+        $('footer img').attr('src','./images/logo_brushed_03_mintandwhite.svg');
+
+      }
       $('#'+path+'HeaderNavAnc').css('color',$scope.pageMod.colors.dark[3]);
     }
   }
