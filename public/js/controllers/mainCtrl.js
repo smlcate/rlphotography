@@ -1,5 +1,35 @@
 app.controller('mainCtrl', ['$scope', '$http', '$window', '$compile', '$location', function($scope, $http, $window, $compile, $location) {
 
+  $scope.colorScheme = 'light';
+
+  $scope.pageMod = {
+    colors: {
+      light:[
+        '#F7EFE7',
+        '#2A1510',
+        '#D1CDC7',
+        // '#FEF5F5',
+        '#1C6E8C',
+        'rgba(28, 110, 140, 0.9)'
+      ],
+      dark:[
+        '#5D5450',
+        '#F6EEE7',
+        '#2A1611',
+        // '#000000',
+        '#63B995',
+        'rgba(99, 185, 149, 0.9)'
+      ],
+    }
+  };
+
+  $scope.toggleScheme = function() {
+    $scope.colorScheme = $scope.colorScheme ==  'light' ? 'dark': 'light';
+    setColors();
+    setBackground();
+  }
+
+
   var maxLeafCount = 50;
   var maxLeafSize = 10;
   var maxLeafDelay = 4;
@@ -67,36 +97,84 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$compile', '$location
   });
 
   $scope.selectPage = function(p) {
-    console.log(p);
-    $('.headerNavAncs').css('color','#2A1510');
-    $('#' + p + 'HeaderNavAnc').css('color','#1C6E8C');
-    $('#' + p + 'HeaderNavAnc').css('color','#1C6E8C');
+
+    var ancColor = $scope.colorScheme == 'light'? $scope.pageMod.colors.light[1]: $scope.pageMod.colors.dark[1];
+    var selectedAncColor = $scope.colorScheme == 'light'? $scope.pageMod.colors.light[3]: $scope.pageMod.colors.dark[3];
+
+    $('.headerNavAncs').css('color',ancColor);
+    $('#' + p + 'HeaderNavAnc').css('color',selectedAncColor);
+    // $('#' + p + 'HeaderNavAnc').css('color',selectedAncColor);
+    // setColors();
+  }
+
+  function setColors() {
+    var path = $location.path();
+    if (path.length > 1) {
+      path = path.split('/')[1];
+
+    }
+    if (path == '') {
+      path = 'home';
+    }
+    if (path) {
+      if (path == '' || path == '/') {
+        path = 'home';
+      }
+    }
+    if($scope.colorScheme == 'light') {
+
+      $('body').css('background',$scope.pageMod.colors.light[0]);
+      $('.slide img').css('background',$scope.pageMod.colors.light[0]);
+      $('a').css('color',$scope.pageMod.colors.light[1]);
+      $('.hardBorders').css('borderColor',$scope.pageMod.colors.light[1]);
+      $('.hardBorders').css('background', $scope.pageMod.colors.light[1]);
+      $('#headerNav').css('borderColor',$scope.pageMod.colors.light[1]);
+      $('.parentDisplays').css('background',$scope.pageMod.colors.light[4]);
+      $('header img').attr('src','./images/logo_brushed_01.svg')
+      $('footer img').attr('src','./images/logo_brushed_02.svg')
+      $('#'+path+'HeaderNavAnc').css('color',$scope.pageMod.colors.light[3]);
+
+    } else {
+      $('body').css('background',$scope.pageMod.colors.dark[0]);
+      $('.slide img').css('background',$scope.pageMod.colors.dark[0]);
+      $('a').css('color',$scope.pageMod.colors.dark[1]);
+      $('.hardBorders').css('borderColor',$scope.pageMod.colors.dark[1]);
+      $('.hardBorders').css('background', $scope.pageMod.colors.dark[1]);
+      $('#headerNav').css('borderColor',$scope.pageMod.colors.dark[1]);
+      $('.parentDisplays').css('background',$scope.pageMod.colors.dark[4]);
+      $('header img').attr('src','./images/logo_brushed_01_mintandwhite.svg');
+      $('footer img').attr('src','./images/logo_brushed_02_mintandwhite.svg');
+      $('#'+path+'HeaderNavAnc').css('color',$scope.pageMod.colors.dark[3]);
+    }
   }
 
   function setBackground() {
 
     var leaves = [];
 
-    var colors = [
-      '#F7EFE7',
-      '#D1CDC7',
-      '#2A1510',
-      '#1C6E8C'
-    ];
 
 
-    function getRandomColor() {
-      const randomIndex = Math.floor(Math.random() * colors.length);
-      return colors[randomIndex];
-    }
 
-    function getRandomSize() {
-      const randomNumber = Math.random() * (maxLeafSize-1.5) + 1.5;
-      return randomNumber;
-    }
+
 
     function createLeaf() {
+      const thisScheme = $scope.colorScheme;
+      var colors = $scope.colorScheme == 'light' ?[
+        '#F7EFE7',
+        '#D1CDC7',
+        '#2A1510',
+        '#1C6E8C'
+      ]: $scope.pageMod.colors.dark;
 
+      function getRandomColor() {
+        const randomIndex = Math.floor(Math.random() * colors.length);
+        return colors[randomIndex];
+      }
+
+      function getRandomSize() {
+        const randomNumber = Math.random() * (maxLeafSize-1.5) + 1.5;
+        return randomNumber;
+      }
       var leaf = {
         size: getRandomSize(),
         color: getRandomColor(),
@@ -122,12 +200,14 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$compile', '$location
 
         // Remove the leaf when it is completely off the page
         leafElement.on('animationiteration', function () {
-          console.log("remove element");
           leafElement.remove();
           // createLeaf();
         });
-
-        setTimeout(createLeaf, Math.random() * maxLeafDelay * 1000);
+        if ($scope.colorScheme == thisScheme) {
+          setTimeout(createLeaf, Math.random() * maxLeafDelay * 1000);
+        } else {
+          return;
+        }
       });
 
 
@@ -141,6 +221,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$window', '$compile', '$location
 
   function init() {
 
+    setColors();
     setBackground();
 
     var path = $location.path();

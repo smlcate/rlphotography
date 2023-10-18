@@ -30,6 +30,8 @@
         <a href="/" class="headerNavAncs" id="homeHeaderNavAnc" ng-click="selectPage('home')">Home</a>
         <a href="/#!/gallery" class="headerNavAncs" id="galleryHeaderNavAnc" ng-click="selectPage('gallery')">Gallery</a>
         <a href="/#!/request" class="headerNavAncs" id="requestHeaderNavAnc" ng-click="selectPage('request')">Request a Shoot</a>
+        <a href="" class="headerNavAncs" ng-click="toggleScheme()" ng-if="colorScheme == 'dark'">Light Scheme</a>
+        <a href="" class="headerNavAncs" ng-click="toggleScheme()" ng-if="colorScheme == 'light'">Dark Scheme</a>
       </nav>
     </header>
 

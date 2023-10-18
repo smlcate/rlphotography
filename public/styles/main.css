@@ -12,6 +12,13 @@
 #FEF5F5
 #1C6E8C
  */
+ /*
+#5D5450,
+#F6EEE7,
+#2A1611,
+#000000,
+#63B995
+  */
 html {
   width: 100vw;
   overflow: hidden;
@@ -108,7 +115,7 @@ header img {
 
 @keyframes fallingLeaves {
   0% {
-    transform: translateY(-20vh) rotate(0deg);
+    transform: translateY(-30vh) rotate(0deg);
     opacity: 1;
   }
   100% {
@@ -128,6 +135,7 @@ header img {
   min-height: 70vh;
   /* background: rgba(247, 239, 231, 0.9); */
   background: rgba(28, 110, 140, 0.9);
+  /* background: rgba(99, 185, 149, 0.9); */
   display:flex;
   flex-direction: column;
   align-items: center;
